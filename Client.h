@@ -21,12 +21,16 @@ typedef std::vector<Transaction> op_trace;
 struct Client{
     
     double buy_coins(int amount){
-        auto price = place_transaction(amount);;
+        if(amount > BrokerHandler::get_instance()->get_max_amount())
+            return 0;
+        auto price = place_transaction(amount);
         m_tr.push_back(std::move(Transaction(amount, price)));   
         return price;
     }
     
     double sell_coins(int amount){
+        if(amount > BrokerHandler::get_instance()->get_max_amount())
+            return 0;
         auto price = place_transaction(amount);
         m_tr.push_back(std::move(Transaction(-amount, price)));   
         return price;
@@ -54,11 +58,11 @@ private:
         auto bh = BrokerHandler::get_instance();
         
         while(amount_left > MAX_AMOUNT){
-            sum += bh->buy_best_rate(MAX_AMOUNT);
+            sum += bh->place_best_rate(MAX_AMOUNT);
             amount_left -= MAX_AMOUNT;
         }
         
-        sum += bh->buy_best_rate(amount_left);
+        sum += bh->place_best_rate(amount_left);
         bh->finish_transaction();
         
         return sum;

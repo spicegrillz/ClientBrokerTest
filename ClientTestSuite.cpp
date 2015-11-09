@@ -1,8 +1,6 @@
 /* 
  * File:   ClientTestSuite.cpp
  * Author: maxim
- *
- * Created on Nov 6, 2015, 3:34:58 PM
  */
 
 #include <gtest/gtest.h>

@@ -45,12 +45,22 @@ public:
      * using 9 indexes (10 - 100 with step 10) for all possible rates.
      * Currently we assume that rate for bigger amount is always better
      * than for smaller.
+     * 
+     * Additional there is logical problem in assignment itself.
+     * Judging by test cases when client sells coins
+     * it does it by lowest rate, but it seems to be more correct
+     * to sell by highest and buy by lowest
+     * So for current implementation we don't distinguish
+     * different transactions, but in future it make sense to add
+     * parameter to pick the best price for different kinds
      */
-    double buy_best_rate(int amount);    
+    double place_best_rate(int amount);    
     void add_broker(Broker br);
     void finish_transaction();
     void clear_brokers();
     std::vector<int> get_total();
+    int get_max_amount();
+    
     
 protected:
     BrokerHandler(){};

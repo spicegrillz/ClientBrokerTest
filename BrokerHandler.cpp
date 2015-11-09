@@ -14,7 +14,7 @@ BrokerHandler* BrokerHandler::get_instance(){
         return instance;
     }
 
-double BrokerHandler::buy_best_rate(int amount){
+double BrokerHandler::place_best_rate(int amount){  
     double min = 0, curr;
     int br_id = 0, min_id = 0;
     for(auto br: broker_storage){
@@ -46,4 +46,8 @@ std::vector<int> BrokerHandler::get_total(){
     for(auto br: broker_storage)
         res.push_back(br.total);
     return res;
+}
+
+int BrokerHandler::get_max_amount(){
+    return MAX_AMOUNT * broker_storage.size();
 }
